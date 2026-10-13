@@ -60,7 +60,7 @@ A monetização ainda não está implementada; as áreas de anúncio estão apen
 Pré-requisitos: [Node.js](https://nodejs.org/) 20 ou superior.
 
 ```bash
-git clone https://github.com/<seu-usuario>/simulafacil.git
+git clone https://github.com/ramosnvy/simulafacil.git
 cd simulafacil
 npm install
 npm run dev
