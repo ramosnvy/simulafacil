@@ -14,7 +14,9 @@ export default function Header() {
       <div className="container">
         <Link to="/" className="logo">
           <img src="/favicon.svg" alt="" width="28" height="28" />
-          Simula<span>Fácil</span>
+          <span>
+            Simula<strong>Fácil</strong>
+          </span>
         </Link>
         <nav className="nav" aria-label="Navegação principal">
           {links.map((link) => (

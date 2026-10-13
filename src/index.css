@@ -71,7 +71,7 @@ h3 {
   text-decoration: none;
 }
 
-.logo span {
+.logo strong {
   color: var(--brand);
 }
 
