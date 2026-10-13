@@ -1,0 +1,59 @@
+{
+  "referencia": {
+    "descricao": "Taxas de referência usadas como padrão nas simulações. Podem ser ajustadas pelo usuário.",
+    "selic": 15,
+    "cdi": 14.9
+  },
+  "produtos": [
+    {
+      "id": "poupanca",
+      "nome": "Poupança",
+      "emissor": "Bancos em geral",
+      "indexador": "poupanca",
+      "isentoIR": true,
+      "liquidez": "Diária",
+      "patrocinado": false
+    },
+    {
+      "id": "tesouro-selic",
+      "nome": "Tesouro Selic",
+      "emissor": "Tesouro Nacional",
+      "indexador": "selic",
+      "percentual": 100,
+      "taxaCustodia": 0.2,
+      "isentoIR": false,
+      "liquidez": "D+1",
+      "patrocinado": false
+    },
+    {
+      "id": "cdb-100",
+      "nome": "CDB 100% do CDI",
+      "emissor": "Grandes bancos",
+      "indexador": "cdi",
+      "percentual": 100,
+      "isentoIR": false,
+      "liquidez": "Diária",
+      "patrocinado": false
+    },
+    {
+      "id": "cdb-115",
+      "nome": "CDB 115% do CDI",
+      "emissor": "Banco Parceiro (exemplo)",
+      "indexador": "cdi",
+      "percentual": 115,
+      "isentoIR": false,
+      "liquidez": "No vencimento",
+      "patrocinado": true
+    },
+    {
+      "id": "lci-90",
+      "nome": "LCI 90% do CDI",
+      "emissor": "Bancos médios",
+      "indexador": "cdi",
+      "percentual": 90,
+      "isentoIR": true,
+      "liquidez": "Após 90 dias",
+      "patrocinado": false
+    }
+  ]
+}
