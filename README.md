@@ -45,6 +45,7 @@ claras, comparativas e acessíveis para qualquer pessoa.
 - [ESLint](https://eslint.org/) — análise estática do código
 - JSON estático como fonte de dados
 - Git e GitHub para versionamento
+- GitHub Actions para integração contínua
 
 ## Possibilidades de monetização
 
@@ -76,10 +77,75 @@ Outros comandos:
 | `npm run preview` | Serve localmente a versão gerada pelo build |
 | `npm run lint`    | Executa a análise do código com ESLint      |
 
+## Integração Contínua
+
+[![CI](https://github.com/ramosnvy/simulafacil/actions/workflows/ci.yml/badge.svg)](https://github.com/ramosnvy/simulafacil/actions/workflows/ci.yml)
+
+### Ferramenta utilizada
+
+**GitHub Actions**. O pipeline está definido em
+[`.github/workflows/ci.yml`](.github/workflows/ci.yml) e roda em uma máquina virtual Ubuntu com
+Node.js 22.
+
+### Quando o pipeline é executado
+
+- A cada **push** na branch `main`;
+- A cada **pull request** aberto ou atualizado para a branch `main`;
+- Manualmente, pelo botão *Run workflow* na aba Actions (`workflow_dispatch`).
+
+Assim, toda alteração enviada ao repositório é validada automaticamente, sem depender de
+alguém executar o build na própria máquina.
+
+### Etapas do pipeline
+
+```
+Push / Pull request
+        ↓
+Checkout do código        (actions/checkout)
+        ↓
+Configurar Node.js        (actions/setup-node, com cache do npm)
+        ↓
+Instalar dependências     (npm ci)
+        ↓
+Lint                      (npm run lint)
+        ↓
+Build                     (npm run build)
+        ├── sucesso → ✓ alteração validada
+        └── falha   → ✕ GitHub marca o commit como quebrado
+```
+
+1. **Checkout:** baixa o código do commit que disparou a execução.
+2. **Configurar Node.js:** instala o Node.js 22 e reaproveita o cache de pacotes do npm.
+3. **Instalar dependências:** `npm ci` instala exatamente as versões do `package-lock.json`.
+4. **Lint:** o ESLint verifica erros e más práticas no código.
+5. **Build:** o Vite gera a versão de produção. Se qualquer etapa falhar, o pipeline é
+   interrompido e marcado como falho.
+
+### Como verificar uma execução
+
+1. Acesse a aba **[Actions](https://github.com/ramosnvy/simulafacil/actions)** do repositório.
+2. Selecione o workflow **CI** e clique na execução desejada (cada uma mostra o commit que a
+   disparou).
+3. Abra o job **Build da SPA** para ver o log de cada etapa.
+
+O resultado também aparece ao lado de cada commit (✓ verde ou ✕ vermelho) e no selo no topo
+desta seção.
+
+Para validar o funcionamento, foi enviado um commit com uma **falha proposital** (importação de
+um arquivo inexistente). O pipeline falhou na etapa *Build*, mostrando o erro no log. O
+commit seguinte reverteu a alteração e o pipeline voltou a passar:
+
+```
+Commit → Pipeline → Build ✓   (ci: pipeline de integração contínua com GitHub Actions)
+Commit → Pipeline → Build ✕   (test: falha proposital no build para validar o pipeline)
+Commit → Pipeline → Build ✓   (fix: reverte a falha proposital e restaura o build)
+```
+
 ## Estrutura do projeto
 
 ```
 simulafacil/
+├── .github/workflows/   # pipeline de CI (GitHub Actions)
 ├── public/              # arquivos estáticos (ícone)
 ├── src/
 │   ├── components/      # cabeçalho, rodapé, espaço de anúncio, campos
