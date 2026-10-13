@@ -4,7 +4,7 @@ import Home from './pages/Home.jsx'
 import JurosCompostos from './pages/JurosCompostos.jsx'
 import Financiamento from './pages/Financiamento.jsx'
 import Investimentos from './pages/Investimentos.jsx'
-import Sobre from './pages/PaginaInexistente.jsx'
+import Sobre from './pages/Sobre.jsx'
 import NotFound from './pages/NotFound.jsx'
 
 export default function App() {
